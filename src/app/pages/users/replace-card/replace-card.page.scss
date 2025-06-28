@@ -1,0 +1,20 @@
+.container {
+    padding: 1rem 0;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in forwards;
+}
+
+p-chip {
+    cursor: pointer;
+    user-select: none;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

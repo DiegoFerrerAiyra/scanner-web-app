@@ -1,0 +1,30 @@
+@import "variables";
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative !important;
+
+    .header-container {
+        width: 100%;
+        justify-content: center;
+        column-gap: 50px;
+        display: flex;
+        .search-container {
+            margin-bottom: 25px;
+            max-width: 500px;
+        }
+        .button-edit{
+            max-height: 44px;
+        }
+    }
+
+    .features-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 20px;
+        column-gap: 20px;
+    }
+}

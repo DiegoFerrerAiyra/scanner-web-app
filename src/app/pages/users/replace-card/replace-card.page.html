@@ -1,0 +1,48 @@
+<mdk-check-permissions-by-email [emails]="emails">
+    <div class="card card-search">
+        <form class="grid formgrid form-container" [formGroup]="formReplaceCard" (ngSubmit)="submit()">
+            <!-- Modak ID -->
+            <div class="col-12 mb-2 lg:col-3 lg:mb-0">
+                <span class="p-input-icon-left p-input-icon-right p-float-label">
+                    <i class="pi pi-user"></i>
+                    <input type="text" formControlName="modakUserId" pInputText #title id="modakId" class="width100 input-element" />
+                    <i class="pi pi-search"></i>
+                    <label for="float-input">Modak ID</label>
+                </span>
+            </div>
+            <!-- Card ID -->
+            <div class="col-12 mb-2 lg:col-3 lg:mb-0">
+                <span class="p-input-icon-left p-input-icon-right p-float-label">
+                    <i class="pi pi-credit-card"></i>
+                    <input type="string" formControlName="cardId" pInputText #title id="cardID" class="width100 input-element" />
+                    <i class="pi pi-search"></i>
+                    <label for="float-input">Card ID</label>
+                </span>
+            </div>
+    
+            <!-- Email -->
+            <div class="col-12 mb-2 lg:col-3 lg:mb-0">
+                <span class="p-input-icon-left p-input-icon-right p-float-label">
+                    <i class="pi pi-book"></i>
+                    <p-dropdown
+                        formControlName="reason"
+                        [options]="reasons"
+                        placeholder="Type of deliverable">
+                    </p-dropdown>
+                    <i class="pi pi-search"></i>
+                    <label for="float-input">Reason</label>
+                </span>
+            </div>
+    
+            <div class="col-12 mb-2 lg:col-12 lg:mb-0 mt-2 button-container">
+                <div class="flex flex-wrap gap-2">
+                    <button class="button-element" type="submit" [disabled]="formReplaceCard.invalid" pButton pRipple
+                        label="Replace card"></button>
+                </div>
+            </div>
+        </form>
+        <section class="container" *ngIf="cardId">
+            <p-chip (click)="onCopy()" icon="pi pi-copy" label="New Card ID: {{ cardId }}"></p-chip>
+        </section>
+    </div>
+</mdk-check-permissions-by-email>

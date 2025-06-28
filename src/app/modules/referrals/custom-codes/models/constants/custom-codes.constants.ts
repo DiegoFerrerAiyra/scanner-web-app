@@ -1,0 +1,1 @@
+export const  MODAK_REFERRER_ID = "MODAK" as const

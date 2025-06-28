@@ -1,0 +1,452 @@
+<div class="card">
+  <p-toolbar styleClass="p-mb-4">
+    <ng-template pTemplate="left">
+      <button
+        pButton
+        pRipple
+        label="New"
+        icon="pi pi-plus"
+        class="p-button-success p-mr-2"
+        (click)="createItemDialog()"
+      ></button>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <div class="p-d-flex p-ai-center p-jc-between">
+          <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="onInputChange($event)" placeholder="Search" />
+          </span>
+      </div>
+  </ng-template>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [value]="achievementsItems"
+    [rows]="5"
+    [paginator]="false"
+    [(selection)]="achievementsSelectedItem"
+    [rowHover]="true"
+    dataKey="uuid"
+    styleClass="p-datatable-projects"
+    [showCurrentPageReport]="false"
+    [globalFilterFields]="['name', 'miniDescription','MBXRewards', 'startDate', 'endDate']"
+    sortField="startDate"
+    [sortOrder]="-1"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="miniDescription">Mini descrip. <p-sortIcon field="miniDescription"></p-sortIcon></th>
+        <th>Icon</th>
+        <th pSortableColumn="visibility">Visibility <p-sortIcon field="visibility"></p-sortIcon></th>
+        <th pSortableColumn="MBXRewards">MBX Reward <p-sortIcon field="MBXRewards"></p-sortIcon></th>
+        <th pSortableColumn="startDate">Start date <p-sortIcon field="startDate"></p-sortIcon></th>
+        <th pSortableColumn="endDate">End date <p-sortIcon field="endDate"></p-sortIcon></th>
+        <th>Actions</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item let-index="rowIndex">
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.miniDescription }}</td>
+        <td>
+          <img style="width: 50px" [src]="item.icon" />
+        </td>
+        <td>
+          <p-inputSwitch
+            *ngIf="!canEditVisibility(item)"
+            [(ngModel)]="item.visibility"
+            styleClass="ui-inputswitch"
+            [readonly]="true"
+            [disabled]
+          ></p-inputSwitch>
+          <p-inputSwitch
+            *ngIf="canEditVisibility(item)"
+            [(ngModel)]="item.visibility"
+            styleClass="ui-inputswitch"
+            (ngModelChange)="editVisibility(item)"
+          ></p-inputSwitch>
+        </td>
+        <td>{{ item.MBXRewards }}</td>
+        <td>{{ item.startDate | date: "MM-dd-yyyy" }}</td>
+        <td>{{ item.endDate | date: "MM-dd-yyyy" }}</td>
+        <td>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-pencil"
+            class="p-button-secondary p-button-sm p-mr-2 button-actions"
+            (click)="editItemDialog(item)"
+            style="margin-right: 0.5em;">
+          </button>
+          <button
+            pButton
+            pRipple
+            icon="pi pi-eye"
+            class="p-button-secondary p-button-sm p-mr-2 button-actions button-second"
+            routerLink="{{item.id}}"
+            style="margin-right: 0.5em;">
+          </button>
+      </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<!-- MODAL EDIT OR CREATE -->
+<p-dialog
+  [(visible)]="activateDialog"
+  [style]="{ width: '650px' }"
+  header="Achievement Item"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+
+    <!-- NAME -->
+    <div class="p-field">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        pInputText
+        id="name"
+        [(ngModel)]="itemTemp.name"
+        (ngModelChange)="editingDialogEvent()"
+        required
+      />
+    </div>
+
+    <!-- MINI DESCRIPTION -->
+    <div class="p-field">
+      <label for="mini_description">Mini description</label>
+      <input
+        type="text"
+        pInputText
+        id="mini_description"
+        [(ngModel)]="itemTemp.miniDescription"
+        (ngModelChange)="editingDialogEvent()"
+        required
+      />
+    </div>
+
+    <!-- LINK -->
+    <div class="p-field">
+      <label for="mini_description">Link</label>
+      <input
+        type="text"
+        pInputText
+        id="link"
+        [(ngModel)]="itemTemp.link"
+        (ngModelChange)="editingDialogEvent()"
+        required
+      />
+    </div>
+
+    <!-- VISIBILITY -->
+    <div class="switch-container">
+      <p-inputSwitch
+        [(ngModel)]="itemTemp.visibility"
+        (ngModelChange)="editingDialogEvent()"
+      ></p-inputSwitch>
+      <p class="switch-label">
+        Achievement visibility
+      </p>
+    </div>
+
+    <!-- CONTRIBUTES -->
+    <div class="switch-container">
+      <p-inputSwitch
+        [(ngModel)]="itemTemp.contributes"
+        (ngModelChange)="editingDialogEvent()"
+      ></p-inputSwitch>
+      <p class="switch-label">
+        Contributes to Streak
+      </p>
+    </div>
+
+    <!-- ICON -->
+    <div class="image-dialog-container">
+      <img
+        *ngIf="newImageSelected || isEdition"
+        [src]="itemTemp.icon"
+        style="width: 100px"
+      />
+    </div>
+    <mdk-file-upload
+      [fileType]="fileType"
+      [selectedCategory]="selectedCategory"
+      [videoTipsTitle]="infoTitle"
+      [videoTipsMessages]="infoMessages"
+      [uploadingResource]="uploadingImage"
+      [showTips]="true"
+      [multiple]="false"
+      [maxFileInput]="350000000"
+      [showTips]="false"
+      (outputFile)="checkUpload($event)"
+      (outputFileEmpty)="removeResourceForm()"
+      chooseLabel="Upload icon"
+    >
+    </mdk-file-upload>
+
+    <!-- MBX REWARDS -->
+    <div class="p-field">
+      <label for="rewards">MBX Reward</label>
+      <input
+        type="number"
+        pInputText
+        id="rewards"
+        [(ngModel)]="itemTemp.MBXRewards"
+        (ngModelChange)="editingDialogEvent()"
+        required
+      />
+    </div>
+
+    <!-- POINTS REWARDS -->
+    <div class="p-field">
+      <label for="points">Points Reward</label>
+      <input
+        type="number"
+        pInputText
+        id="points"
+        [(ngModel)]="itemTemp.pointsRewards"
+        (ngModelChange)="editingDialogEvent()"
+        required
+      />
+    </div>
+
+    <!-- BIG DESCRIPTION -->
+    <div class="p-field">
+      <label for="bigDescription">Big description</label>
+      <textarea
+        pInputTextarea
+        id="bigDescription"
+        [(ngModel)]="itemTemp.bigDescription"
+        (ngModelChange)="editingDialogEvent()"
+        required
+      ></textarea>
+    </div>
+
+    <!-- CONDITIONS -->
+    <div class="p-field">
+      <label for="conditions">Conditions</label>
+      <textarea
+        pInputTextarea
+        id="conditions"
+        [(ngModel)]="itemTemp.conditions"
+        (ngModelChange)="editingDialogEvent()"
+        required
+      ></textarea>
+    </div>
+
+    <!-- PROOF -->
+    <section class="proof-container">
+      <ng-container>
+        <p class="section-label">
+          Proof
+        </p>
+        <!--
+        <div class="radio-container">
+          <input
+            class="radio-element"
+            type="radio"
+            name="proof"
+            [value]="'NONE'"
+            [(ngModel)]="itemTemp.proof.type"
+            (ngModelChange)="editingDialogEvent()"
+          />
+          <p class="radio-label">
+            {{ "ADMIN.ACHIEVEMENTS.DIALOG.PROOF.NONE" | translate }}
+          </p>
+        </div>
+        -->
+        <div class="radio-container">
+          <input
+            class="radio-element"
+            type="radio"
+            name="proof"
+            [value]="'IMAGE'"
+            [(ngModel)]="itemTemp.proof.type"
+            (ngModelChange)="editingDialogEvent()"
+          />
+          <p class="radio-label">
+            Image
+          </p>
+        </div>
+        <div class="radio-container">
+          <input
+            class="radio-element"
+            type="radio"
+            name="proof"
+            [value]="'TEXT'"
+            [(ngModel)]="itemTemp.proof.type"
+            (ngModelChange)="editingDialogEvent()"
+          />
+          <p class="radio-label">
+            Text
+          </p>
+        </div>
+        <div class="radio-container">
+          <input
+            class="radio-element"
+            type="radio"
+            name="proof"
+            [value]="'IMAGE_TEXT'"
+            [(ngModel)]="itemTemp.proof.type"
+            (ngModelChange)="editingDialogEvent()"
+          />
+          <p class="radio-label">
+            Image + Text}
+          </p>
+        </div>
+      </ng-container>
+      <ng-container>
+        <!-- INPUT TEXT -->
+        <div class="p-field" *ngIf="itemTemp.proof.type === 'TEXT' || itemTemp.proof.type === 'IMAGE_TEXT'">
+          <label for="proofText">Description</label>
+          <textarea
+            pInputTextarea
+            id="proofText"
+            [(ngModel)]="itemTemp.proof.description"
+            (ngModelChange)="editingDialogEvent()"
+            required
+          ></textarea>
+        </div>
+
+        <!-- IMAGE -->
+        <div class="image-dialog-container">
+          <img
+            *ngIf="itemTemp.proof.url && (itemTemp.proof.type === 'IMAGE' || itemTemp.proof.type === 'IMAGE_TEXT')"
+            [src]="itemTemp.proof.url"
+            style="width: 100px"
+          />
+        </div>
+        <mdk-file-upload
+          [fileType]="fileType"
+          [selectedCategory]="selectedCategory"
+          [videoTipsTitle]="infoTitle"
+          [videoTipsMessages]="infoMessages"
+          [uploadingResource]="uploadingImage"
+          [showTips]="true"
+          [multiple]="false"
+          [maxFileInput]="350000000"
+          [showTips]="false"
+          (outputFile)="checkUpload($event,true)"
+          (outputFileEmpty)="removeImageProof()"
+          chooseLabel="Upload Example"
+        >
+        </mdk-file-upload>
+      </ng-container>
+    </section>
+
+    <!-- Automatic payments -->
+    <div class="switch-container">
+      <p-inputSwitch [(ngModel)]="itemTemp.automaticPayment"></p-inputSwitch>
+      <p class="switch-label">
+        Automatic payment
+      </p>
+    </div>
+
+    <!-- DATES -->
+    <section class="dates-container">
+      <!-- START DATE -->
+      <div class="p-field">
+        <label for="startDate">Start date</label>
+        <p-calendar
+          [(ngModel)]="itemTemp.startDate"
+          (ngModelChange)="editingDialogEvent()"
+          [showTime]="true"
+          inputId="time"
+        >
+        </p-calendar>
+      </div>
+      <div class="p-field">
+        <label for="startDate">End date</label>
+        <p-calendar
+          [(ngModel)]="itemTemp.endDate"
+          (ngModelChange)="editingDialogEvent()"
+          [showTime]="true"
+          inputId="time"
+        >
+        </p-calendar>
+      </div>
+    </section>
+
+    <!-- ANNOUCEMENT NOTIFICATION -->
+    <section class="annoucement-container">
+      <p class="section-label">
+        Announcement notification
+      </p>
+      <div class="p-field">
+        <label for="notificationTitle">"Notification title</label>
+        <input
+          type="text"
+          pInputText
+          id="notificationTitle"
+          [(ngModel)]="itemTemp.annoucementNotificationTitle"
+          (ngModelChange)="editingDialogEvent()"
+          required
+        />
+      </div>
+      <div class="p-field">
+        <label for="notificationDescription">Notification description</label>
+        <textarea
+          pInputTextarea
+          id="notificationDescription"
+          [(ngModel)]="itemTemp.annoucementNotificationDescription"
+          (ngModelChange)="editingDialogEvent()"
+          required
+        ></textarea>
+      </div>
+    </section>
+
+    <!-- FINISHED NOTIFICATION -->
+    <section class="finished-container">
+      <p class="section-label">
+        Approval notification
+      </p>
+      <div class="p-field">
+        <label for="finishednotificationTitle">Notification title</label>
+        <input
+          type="text"
+          pInputText
+          id="finishednotificationTitle"
+          [(ngModel)]="itemTemp.finishedNotificationTitle"
+          (ngModelChange)="editingDialogEvent()"
+          required
+        />
+      </div>
+      <div class="p-field">
+        <label for="finishedNotificationDescription">Notification description</label>
+        <textarea
+          pInputTextarea
+          id="finishedNotificationDescription"
+          [(ngModel)]="itemTemp.finishedNotificationDescription"
+          (ngModelChange)="editingDialogEvent()"
+          required
+        ></textarea>
+      </div>
+    </section>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="save()"
+      [disabled]="disabledSaveButton"
+    ></button>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,39 @@
+<span class="mb-2 font-semibold title-page-element">Manage referral codes</span>
+
+<section class="container">
+    <div class="inputs-container">
+        <!-- Code -->
+        <div class="input-container">
+            <span class="p-float-label width-elements">
+                <input
+                    class="input-element"
+                    pInputText
+                    maxlength="100"
+                    #title
+                    [(ngModel)]="inputCodeID"
+                    id="title">
+                <label #labelTitle class="label-text" for="title">
+                    Code
+                </label>
+            </span>
+        </div>
+    </div>
+
+    <div class="inputs-container">
+        <!-- choose -->
+        <div class="input-container">
+            <label class="p-mb-2">Set state</label>
+            <div class="p-formgrid p-grid" >
+                <div class="p-field-radiobutton p-col-2 elements-container" >
+                    <p-radioButton id="enable" name="enable" value="enable" [(ngModel)]="inputNewState"></p-radioButton>
+                    <label class="label-padding" for="enable">Enable</label>
+                </div>
+                <div class="p-field-radiobutton p-col-2 elements-container" >
+                    <p-radioButton id="disable" name="disable" value="disable" [(ngModel)]="inputNewState"></p-radioButton>
+                    <label class="label-padding" for="disable">Disable</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<button pButton pRipple type="button" label="Send" class="p-button-info button-send" (click)="disableCustomCode()" ></button>

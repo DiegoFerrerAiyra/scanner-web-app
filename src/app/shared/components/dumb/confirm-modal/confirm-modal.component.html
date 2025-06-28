@@ -1,0 +1,73 @@
+
+<section
+    *ngIf="showModal"
+    (click)="checkCloseModal($event)"
+    id="modalBackground"
+    class="modal-container">
+    <section class="card-container">
+        <div class="icon-close-container">
+            <i class="pi pi-times icon checkIcon" (click)="type === 'RADIO' ?  modalOptionsEmit(false) : modalEmit(false)"></i>
+        </div>
+        <div class="icon-check-container">
+            <i class="pi pi-info-circle icon checkIcon"></i>
+        </div>
+        <h4 class="title">{{title || 'Confirm'}}</h4>
+
+        <div class="message-container" *ngIf="message">
+            <p class="message">{{message}}</p>
+        </div>
+
+        <section class="radio-container" *ngIf="type ==='RADIO'">
+            <div class="field-radiobutton" *ngFor="let option of optionsRadio; let i = index">
+                <p-radioButton [name]="'optionRad' + i" [value]="option" [(ngModel)]="valueRadio" [id]="'option' + i"></p-radioButton>
+                <label [for]="'option' + i" class="radio-label">{{option}}</label>
+            </div>
+            <div class="text-area-container" *ngIf="valueRadio === 'Other'">
+                <textarea [(ngModel)]="otherValue" rows="4" cols="50" class="text-area-element">
+                </textarea>
+            </div>
+        </section>
+
+        <div class="buttons-container">
+            <button [disabled]="type === 'RADIO' && !valueRadio || (valueRadio === 'Other' && !otherValue)" (click)="type === 'RADIO' ?  showReConfirmModal = true : modalEmit(true)" type="button" class="btn-modak button yes">
+                <span class="text">{{acceptText || 'Yes'}}</span>
+                <div class="btn-overlay-default"></div>
+            </button>
+            <button
+                (click)="type === 'RADIO' ?  modalOptionsEmit(false) : modalEmit(false)"
+                type="button"
+                class="btn-modak button btn-green-secondary">
+                <span class="text">{{cancelText || 'No'}}</span>
+                <div class="btn-overlay-default"></div>
+            </button>
+        </div>
+
+        <section class="third-action-container" *ngIf="thirdButtonText">
+            <button (click)="handleThirdButton()" type="button" class="btn-modak button">
+                <span class="text">{{thirdButtonText}}</span>
+                <div class="btn-overlay-default"></div>
+            </button>
+        </section>
+
+        <section class="confirm-container" *ngIf="showReConfirmModal">
+
+            <section class="confirm-modal">
+
+                <h3 class="title">Are you sure?</h3>
+                <button (click)="modalOptionsEmit(true)" type="button" class="btn-modak button yes">
+                    <span class="text">Yes</span>
+                    <div class="btn-overlay-default"></div>
+                </button>
+                <button
+                    (click)="showReConfirmModal = false"
+                    type="button"
+                    class="btn-modak button btn-green-secondary">
+                    <span class="text">Cancel</span>
+                    <div class="btn-overlay-default"></div>
+                </button>
+            </section>
+
+        </section>
+
+    </section>
+</section>

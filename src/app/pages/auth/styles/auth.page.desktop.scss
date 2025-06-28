@@ -1,0 +1,14 @@
+@import 'variables';
+
+
+// Styles Desktop
+@media only screen and (min-width: $desktop){
+    .container {
+        .logo-container{
+            width: 500px;
+            .logo-element{
+                width: 500px;
+            }
+        }
+    }
+}

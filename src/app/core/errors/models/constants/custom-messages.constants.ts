@@ -1,0 +1,16 @@
+export const ErrorCustomMessages = {
+    DEFAULT_5XX: 'Ooooops, Something went wrong. Please try again or contact us if the error persists',
+    DEFAULT_NOT_5XX: 'Whoops, Something went wrong. Please try again or contact us if the error persists',
+    EXPIRED: 'Sorry, you are not authorized to perform this action',
+    VERIFY : 'You’ve reached the maximum login attempts. Contact us',
+    UPLOAD_VIDEO: 'Couldn’t upload the video',
+    UPLOAD_RESOURCE: 'Couldn’t upload the resource',
+    PROJECT_NOT_EXISTS: "Project doesn't exists",
+    COULD_NOT_GET_TOKEN: "Couldn’t get token",
+    DISCORD_ERROR: 'There was an issue trying to connect with discord',
+    YOTI_VERIFICATION_ERROR: 'We could not verify that you are under 19, please try again',
+    YOTI_VERIFICATION_PENDING: 'Your verification is still processing',
+    VGS_LOAD_ERROR: 'VGS Loaded error',
+    USER_NOT_UUID: 'User not UUID',
+    CLOSE_ACCOUNT_TIMEOUT: 'It has taken a long time to get an answer',
+}

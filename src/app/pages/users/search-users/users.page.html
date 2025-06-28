@@ -1,0 +1,201 @@
+<div class="card card-search">
+  <div class="grid formgrid form-container">
+      <!-- Modak ID -->
+      <div class="col-12 mb-2 lg:col-3 lg:mb-0">
+        <span class="p-input-icon-left p-input-icon-right p-float-label">
+          <i class="pi pi-user"></i>
+          <input
+            type="text"
+            pInputText
+            #title
+            id="modakId"
+            [(ngModel)]="inputModakId"
+            (ngModelChange)="verifyInputs()"
+            class="width100 input-element"
+          />
+          <i class="pi pi-search"></i>
+          <label for="float-input">Modak ID</label>
+        </span>
+      </div>
+    <!-- Phone -->
+    <div class="col-12 mb-2 lg:col-3 lg:mb-0">
+      <span class="p-input-icon-left p-input-icon-right p-float-label">
+        <i class="pi pi-phone"></i>
+        <input
+          type="number"
+          pInputText
+          #title
+          id="phone"
+          [(ngModel)]="inputPhone"
+          (ngModelChange)="verifyInputs()"
+          class="width100 input-element"
+        />
+        <i class="pi pi-search"></i>
+        <label for="float-input">Phone</label>
+      </span>
+    </div>
+
+    <!-- Email -->
+    <div class="col-12 mb-2 lg:col-3 lg:mb-0">
+      <span class="p-input-icon-left p-input-icon-right p-float-label">
+        <i class="pi pi-envelope"></i>
+        <input
+          type="text"
+          pInputText
+          #title
+          id="discordUsername"
+          [(ngModel)]="inputEmail"
+          (ngModelChange)="verifyInputs()"
+          class="width100 input-element"
+        />
+        <i class="pi pi-search"></i>
+        <label for="float-input">Email</label>
+      </span>
+    </div>
+
+    <div class="col-12 mb-2 lg:col-12 lg:mb-0 button-container">
+      <div class="flex flex-wrap gap-2">
+        <button
+          [disabled]="disabledSubmit"
+          (click)="searchUsers()"
+          class="button-element"
+          pButton
+          pRipple
+          label="Search"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card card-table" *ngIf="users.length">
+  <p-table
+    [value]="users"
+    dataKey="name"
+    [expandedRowKeys]="expandedRows"
+    responsiveLayout="scroll"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex table-header"></div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem"></th>
+        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+        <th pSortableColumn="phone">Phone <p-sortIcon field="phone"></p-sortIcon></th>
+        <th pSortableColumn="mbx_balance">MBX Balance <p-sortIcon field="mbx_balance"></p-sortIcon></th>
+        <th pSortableColumn="roles">Role <p-sortIcon field="roles"></p-sortIcon></th>
+        <th pSortableColumn="bankAccountStatus">Bank Account Status <p-sortIcon field="bankAccountStatus"></p-sortIcon></th>
+        <th pSortableColumn="accountStatus">Account Status <p-sortIcon field="accountStatus"></p-sortIcon></th>
+        <th>View</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-user let-expanded="expanded" let-i="rowIndex">
+      <tr>
+        <td>
+          <button
+            type="button"
+            pButton
+            pRipple
+            [pRowToggler]="user"
+            class="p-button-text p-button-rounded p-button-plain"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          ></button>
+        </td>
+        <td style="min-width: 12rem">{{user.name}}</td>
+        <td style="min-width: 8rem">{{user.email}}</td>
+        <td style="min-width: 10rem">{{user.phone}}</td>
+        <td style="min-width: 10rem">{{user.mbx_balance}}</td>
+        <td>
+            <span
+                class="product-badge"
+                [ngClass]="{
+                    'status-outofstock': user.roles === USER_ROLES.TEEN,
+                    'status-lowstock': user.roles === USER_ROLES.PARENT}">
+                {{user.roles}}
+            </span>
+        </td>
+        <td>
+          <span
+            *ngIf="user.bankAccountStatus === BANK_ACCOUNT_STATUS.CLOSED || 
+              user.bankAccountStatus === BANK_ACCOUNT_STATUS.DISABLED"
+            class="product-badge status-cancelled">
+            {{ user.bankAccountStatus }}
+          </span>
+          <span *ngIf="user.bankAccountStatus === BANK_ACCOUNT_STATUS.ENABLED" class="product-badge status-instock">
+            {{ user.bankAccountStatus }}
+          </span>
+        </td>
+        <td>
+          <span *ngIf="user.accountStatus === ACCOUNT_STATUS.CLOSED" class="product-badge status-cancelled">
+            {{ user.accountStatus }}
+          </span>
+          <span *ngIf="user.accountStatus === ACCOUNT_STATUS.ACTIVE" class="product-badge status-instock">
+            {{ user.accountStatus }}
+          </span>
+          <button
+          *ngIf="isAdminAvailable && user.accountStatus === ACCOUNT_STATUS.MANUAL_REVIEW_REQUIRED"
+            pButton pRipple type="button"
+            label="Pending Close"
+            class="button-verify p-button-warning"
+            (click)="setModalForPendingCloseAccount(user)">
+          </button>
+      </td>
+      <td>
+        <button pButton pRipple icon="pi pi-eye" class="p-button-primary p-button-sm p-mr-2 button-actions button-second"
+          style="margin-right: 0.5em;" (click)="seePIIData(user, i)">
+        </button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="rowexpansion" let-user>
+        <tr>
+            <td colspan="8">
+                <div class="expansion-container">
+                    <div class="p-p-3 internal-separator">
+                        <div class="first-separator">
+                            <section class="modak-section">
+                                <h3>Modak Account Created</h3>
+                                <div class="value-container">
+                                    <p class="value-element">{{user.accountCreated}}</p>
+                                </div>
+                                <button
+                                  *ngIf="isAdminAvailable && user.accountStatus === ACCOUNT_STATUS.ACTIVE"
+                                  pButton pRipple type="button"
+                                  label='Close Account'
+                                  class=' p-button-danger'
+                                  (click)="setModalForCloseAccount(user)">
+                                </button>
+                            </section>
+                        </div>
+                        <div class="first-separator">
+                            <section class="modak-section">
+                                <h3>Modak User ID</h3>
+                                <div class="value-container">
+                                    <p class="value-element">{{user.uuid}}</p>
+                                </div>
+                            </section>  
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+    </ng-template>
+  </p-table>
+</div>
+
+<mdk-confirm-modal
+    [title]="titleModal"
+    [type]="typeModal"
+    [showModal]="showConfirmModal"
+    [message]="messageForModalConfirm"
+    [optionsRadio]="optionsForRadioModal"
+    [thirdButtonText]="labelThirdButtonModal"
+    (closeModal)="handleConfirmModal($event)"
+    (closeModalOptions)="handleConfirmModal($event)"
+    (thirdButtonAction)="handleThirdActionModal()">
+</mdk-confirm-modal>

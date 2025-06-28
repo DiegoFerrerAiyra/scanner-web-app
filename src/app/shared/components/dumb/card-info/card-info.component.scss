@@ -1,0 +1,94 @@
+@import "variables";
+
+.container{
+    width: 100%;
+    display: flex;
+    border-radius: 6px;
+    overflow: hidden;
+    .bar-line{
+        width: 10px;
+        &.accentD {
+            background: $accentD;
+        }
+        &.alert {
+            background: $alert;
+        }
+    }
+
+    .elements-container{
+        display: flex;
+        padding: 12px 16px 12px 26px;
+        box-sizing: border-box;
+        column-gap: 12px;
+
+        &.pastelD {
+            background: $pastelD;
+        }
+
+        &.lightAlert {
+            background: $lightAlert;
+        }
+
+        .icon-container{
+            height: 24px;
+            width: 24px;
+            .icon {
+                font-size: 24px;
+                &.accentD {
+                    color:$accentD;
+                }
+                &.alert {
+                    color: $alert;
+                }
+            }
+        }
+        .content{
+
+            .title{
+                font-style: normal;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 20px;
+                &.accentD {
+                    color:$accentD;
+                }
+                &.alert {
+                    color: $alert;
+                }
+            }
+            .data{
+                font-style: normal;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 16px;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                row-gap: 2px;
+
+                &.accentD {
+                    color:$accentD;
+                }
+                &.alert {
+                    color: $alert;
+                }
+
+                .data-element{
+                    display: flex;
+                    // align-items: center;
+                    column-gap: 7px;
+                    .data-simbol{
+                        font-size: 20px;
+                    }
+                    .data-message{
+
+                    }
+                }
+            }
+        }
+    }
+
+    .fullWidth{
+        width: 100%;
+    }
+}

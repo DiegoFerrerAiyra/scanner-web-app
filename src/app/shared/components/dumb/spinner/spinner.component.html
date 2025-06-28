@@ -1,0 +1,7 @@
+<section  class="container-spinner" *ngIf="manual || interceptor" [ngClass]="{'manual': manual}">
+    <div class="message" *ngIf="inputMessage">
+      {{inputMessage}}
+    </div>
+    <p-progressSpinner styleClass="custom-spinner"></p-progressSpinner>
+</section>
+

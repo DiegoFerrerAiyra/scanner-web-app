@@ -1,0 +1,116 @@
+<mdk-check-permissions-by-email [emails]="EMAILS">
+    <div class="card card-search">
+        <form class="grid formgrid form-container" [formGroup]="formFetchCards" (ngSubmit)="searchCards()">
+            <!-- Modak ID -->
+            <div class="col-12 mb-2 lg:col-3 lg:mb-0">
+                <span class="p-input-icon-left p-input-icon-right p-float-label">
+                    <i class="pi pi-user"></i>
+                    <input type="text" [formControlName]="formFields.MODAK_USER_ID" pInputText #title id="modakId"
+                        class="width100 input-element" />
+                    <i class="pi pi-search"></i>
+                    <label for="float-input">Modak ID</label>
+                </span>
+            </div>
+            <div class="col-12 mb-2 lg:col-12 lg:mb-0 mt-2 button-container">
+                <div class="flex flex-wrap gap-2">
+                    <button class="button-element" type="submit" [disabled]="formFetchCards.invalid" pButton pRipple
+                        label="List cards"></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <p-card class="block mb-5" *ngFor="let card of listCards" [style]="{ maxWidth: '650px' }">
+        <div class="p-card-title">
+            <div class="flex justify-content-between flex-wrap align-items-center gap-2">
+                <div class="inline-flex align-items-center gap-2">
+                    <span class="car-type-icon pi"
+                        [ngClass]="{ 'pi-credit-card': typeCards.PHYSICAL === card.type, 'pi-globe': typeCards.VIRTUAL === card.type }">
+                    </span>
+                    <span>{{ typeCardsLabels[card.type] | titlecase }}</span>
+                    <div class="flex align-items-center">
+                        <p-tag class="flex align-items-center" [severity]="getTypeSeverityByStatus(card.status)"
+                            [value]="(cardStatusLabels[card.status] || 'no status') | titlecase"></p-tag>
+                    </div>
+                </div>
+                <div class="inline-flex flex-wrap gap-2" *ngIf="card.status !== cardStatus.CANCELLED">
+                    <button pTooltip="Replace Card" tooltipPosition="top" pButton pRipple icon="pi pi-replay"
+                        (click)="openModalReplaceCard(card)" class="p-button-rounded p-button-warning">
+                        <small class="px-2">Replace</small>
+                    </button>
+                    <button *ngIf="card.type !== TYPE_CARDS.VIRTUAL" pTooltip="Delete Card" tooltipPosition="top" pButton pRipple
+                        icon="pi pi-trash" (click)="deleteCard(card)" class="p-button-rounded p-button-danger">
+                        <small class="px-2">Delete</small>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-wrap justify-content-between p-2 align-items-center gap-3">
+            <p-tag pTooltip="Copy Card ID" tooltipPosition="top" severity="warning" class="cursor-pointer" (click)="copy(card.id)">
+                <span class="card-id">{{ card.id }}</span>
+            </p-tag>
+        </div>
+    </p-card>
+    <p-confirmDialog #cd [key]="confirmationDialog" rejectButtonStyleClass="p-button-outlined">
+    </p-confirmDialog>
+
+    <p-dialog header="Replace card" [modal]="true" [(visible)]="showModalFlag" [style]="{ width: '25rem' }">
+        <form [formGroup]="formReplaceCard" (ngSubmit)="replaceCard()">
+            <div class="block w-100 mb-5">
+                <label for="reason" class="block font-semibold w-6rem">Reason</label>
+                <p-dropdown [formControlName]="formFields.REASON" [options]="reasons" placeholder="Type of deliverable">
+                </p-dropdown>
+            </div>
+            <div class="flex justify-content-evently gap-3 mt-3">
+                <div>
+                    Current Design: <p-tag 
+                        severity="success" 
+                        pTooltip="Set to default" 
+                        tooltipPosition="top" 
+                        class="cursor-pointer" 
+                        [value]="moCardsLabels[moCardSelected?.theme] || moCardsLabels[moCardsValues.NoTheme]"></p-tag>
+                    <div class="my-2"></div>
+                    <ng-template [ngTemplateOutlet]="moCards"
+                        [ngTemplateOutletContext]="{$implicit: moCardSelected?.theme || moCardsValues.NoTheme }"></ng-template>
+                </div>
+            </div>
+            <div class="flex justify-content-end gap-2 mt-5">
+                <button 
+                    pButton pRipple
+                    type="button" 
+                    label="Cancel" 
+                    class="p-button-rounded p-button-secondary"
+                    (click)="showModalFlag = false">
+                </button>
+                <button 
+                    pButton pRipple
+                    [disabled]="formReplaceCard.invalid" 
+                    type="submit" label="Replace card" 
+                    class="p-button-rounded p-button-success"
+                    severity="success">
+                </button>
+            </div>
+        </form>
+    </p-dialog>
+</mdk-check-permissions-by-email>
+
+
+<ng-template #moCards let-data>
+    <div [ngSwitch]="data">
+        <ng-container *ngSwitchCase="moCardsValues.MoRiginal">
+            <mdk-mo-card-faces></mdk-mo-card-faces>
+        </ng-container>
+        <!-- the same view can be shown in more than one case -->
+        <ng-container *ngSwitchCase="moCardsValues.MoAitopia">
+            <mdk-mo-card-flow></mdk-mo-card-flow>
+        </ng-container>
+        <ng-container *ngSwitchCase="moCardsValues.MoDoodle">
+            <mdk-mo-card-stickers></mdk-mo-card-stickers>
+        </ng-container>
+        <ng-container *ngSwitchCase="moCardsValues.MoGogh">
+            <mdk-mo-card-gogh></mdk-mo-card-gogh>
+        </ng-container>
+        <ng-container *ngSwitchCase="moCardsValues.NoTheme">
+            <mdk-mo-card-faces></mdk-mo-card-faces>
+        </ng-container>
+    </div>
+</ng-template>

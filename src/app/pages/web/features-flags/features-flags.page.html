@@ -1,0 +1,38 @@
+
+<section class="container">
+
+    <section class="header-container">
+        <div class="p-inputgroup search-container" >
+            <button type="button" pButton pRipple label="Search"></button>
+            <input type="text" pInputText placeholder="Feature name" [(ngModel)]="searchInputValue">
+        </div>
+
+        <button *ngIf="!isProduction" pButton pRipple label="Create" iconPos="right" class="p-button-info button-edit" icon="pi pi-plus" (click)="showCreateForm = true"></button>
+    </section>
+
+    <ng-container *ngIf="features$ | async as features">
+        <section class="features-container" *ngIf="features && features.length">
+            <div *ngFor="let feature of features | searchFeature:searchInputValue;trackBy: trackFeature">
+                <mdk-feature-item
+                    [feature]="feature"
+                    (update)="updateFeature($event)"
+                    (delete)="deleteFeature($event)"
+                    >
+                </mdk-feature-item>
+            </div>
+        </section>
+    </ng-container>
+
+    <mdk-feature-create-edit
+        *ngIf="showCreateForm"
+        [showForm]="showCreateForm"
+        (hideForm)="showCreateForm = false"
+        [showError]="keyFeatureError"
+        (create)="create($event)"
+        >
+    </mdk-feature-create-edit>
+
+</section>
+
+
+

@@ -1,0 +1,12 @@
+<div class="layout-container" [ngClass]="containerClass">
+    <mdk-sidebar></mdk-sidebar>
+    <div class="layout-content-wrapper">
+        <mdk-topbar></mdk-topbar>
+        <mdk-breadcrumb class="content-breadcrumb"></mdk-breadcrumb>
+        <div class="layout-content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <mdk-profilemenu></mdk-profilemenu>
+    <div class="layout-mask"></div>
+</div>

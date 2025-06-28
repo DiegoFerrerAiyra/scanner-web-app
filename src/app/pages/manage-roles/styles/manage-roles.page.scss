@@ -1,0 +1,12 @@
+@import "variables";
+
+.card-table{
+    max-width: 640px;
+}
+.header-table-container{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+@media only screen and (min-width: $desktop){}

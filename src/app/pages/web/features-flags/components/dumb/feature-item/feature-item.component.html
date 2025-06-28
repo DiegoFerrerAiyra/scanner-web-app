@@ -1,0 +1,25 @@
+<section class="features-item-container" *ngIf="feature">
+    <span class="mb-2 font-semibold text-element">{{feature.name}}</span>
+    <p-inputSwitch [(ngModel)]="feature.isEnabled" (ngModelChange)="updateForSwitch()"></p-inputSwitch>
+    <div class="icons-container">
+        <i class="pi pi-pencil text-xl text-primary icon" (click)="editButton()"></i>
+        <i *ngIf="!isProduction" class="pi pi-trash text-xl text-primary icon"  (click)="deleteConfirm()"></i>
+    </div>
+</section>
+
+<mdk-feature-create-edit
+    *ngIf="showEditForm"
+    [showForm]="showEditForm"
+    [feature]="feature"
+    (hideForm)="showEditForm = false"
+    (update)="updateFeatureForm($event)"
+    >
+</mdk-feature-create-edit>
+
+<p-confirmDialog
+    header="Delete feature"
+    key="delete"
+    icon="pi pi-exclamation-triangle"
+    message="Are you sure you want to proceed?"
+    [style]="{width: '350px'}" acceptButtonStyleClass="p-button-text" rejectButtonStyleClass="p-button-text">
+</p-confirmDialog>

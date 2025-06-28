@@ -1,0 +1,5 @@
+export const CActionsUsersModal = {
+    VERIFY_IDENTITY: 'VERIFY_IDENTITY',
+    PENDING_CLOSE_ACCOUNT: 'PENDING_CLOSE_ACCOUNT',
+    CLOSE_ACCOUNT: 'CLOSE_ACCOUNT'
+  } as const

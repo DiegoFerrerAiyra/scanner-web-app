@@ -1,0 +1,29 @@
+@import "variables";
+
+.features-item-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    border: 1px solid #2a2e34;
+    min-width: 240px;
+    column-gap: 20px;
+    padding: 1em;
+    .text-element{
+        margin: 0 !important;
+    }
+    ::ng-deep p-inputSwitch {
+        height: 25px !important;
+    }
+    .icons-container{
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        .icon{
+            &:hover{
+                cursor: pointer;
+                opacity: .5;
+            }
+        }
+    }
+}

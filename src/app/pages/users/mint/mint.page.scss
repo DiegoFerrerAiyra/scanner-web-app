@@ -1,0 +1,68 @@
+@import "variables";
+
+.text-element {
+  font-size: 40px;
+}
+
+.info-container {
+  margin-top: 1em;
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+
+  .button-download {
+    height: 44px;
+  }
+}
+
+.result-container {
+  margin-top: 20px;
+  label {
+    color: white;
+    font-size: 15px;
+  }
+}
+
+.success {
+  background: var(--green-600);
+  color: $white;
+}
+.pending {
+  background: var(--orange-200);
+  color: var(--orange-800);
+}
+.error {
+  background: var(--pink-200);
+  color: var(--pink-800);
+}
+
+.table-container {
+  display: flex;
+}
+.card {
+  .card-title {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+.file-totals-container {
+  display: flex;
+  margin-top: 24px;
+  justify-content: end;
+  gap: 10px;
+  .customer-badge {
+    padding: 6px;
+    cursor: pointer;
+  }
+  .pi {
+    margin-right: 0.5rem;
+  }
+}
+@media only screen and (min-width: $desktop) {
+  .info-container {
+    max-width: 600px;
+  }
+}

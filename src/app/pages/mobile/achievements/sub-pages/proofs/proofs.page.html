@@ -1,0 +1,103 @@
+<!-- ACHIEVEMENT DEFINITION-->
+<div class="card">
+    <p-table #dt
+        [value]="achievementsItems"
+        [rows]="5"
+        [paginator]="false"
+        [rowHover]="true"
+        dataKey="uuid"
+        styleClass="p-datatable-projects"
+        [showCurrentPageReport]="false"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th >Name</th>
+                <th >Description</th>
+                <th >Icon</th>
+                <th >Visibility</th>
+                <th >MBX Reward</th>
+                <th >Start date</th>
+                <th >End date</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item let-index="rowIndex">
+            <tr> 
+                <td>{{item.name}}</td>
+                <td>{{item.miniDescription}}</td>
+                <td>
+                    <img style="width: 50px;" [src]="item.icon">
+                </td>
+                <td>
+                    <p-inputSwitch
+                      [(ngModel)]="item.visibility"
+                      styleClass="ui-inputswitch"
+                      [readonly]="true"
+                    ></p-inputSwitch>
+                  </td>
+                <td>{{item.MBXRewards}}</td>
+                <td>{{item.startDate | date: "MM-dd-yyyy"}}</td>
+                <td>{{item.endDate | date: "MM-dd-yyyy"}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<!-- ACHIEVEMENT DEFINITION-->
+
+<!-- ACHIEVEMENT PARTICIPATIONS-->
+<div class="card proof-items-card">
+    <p-table #dt 
+        [value]="proofItems" 
+        [rows]="5" 
+        [paginator]="false" 
+        [rowHover]="true" 
+        dataKey="id"
+        styleClass="p-datatable-projects"
+        [showCurrentPageReport]="false"
+        sortField="submittedDate"
+        [sortOrder]="-1"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="user">User <p-sortIcon field="name"></p-sortIcon></th>
+                <th >Text Proof</th>
+                <th >Image Proof</th>
+                <th pSortableColumn="submittedDate">Submitted at <p-sortIcon field="submittedDate"></p-sortIcon></th>
+                <th pSortableColumn="status">Reward Status <p-sortIcon field="status"></p-sortIcon></th>
+                <th >MBX Reward</th>
+                <th >Actions</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item let-index="rowIndex">
+            <tr> 
+                <td style="width: 10px;">{{item.user_email}}</td>
+                <td style="width: 180px;">{{item.text}}</td>
+                <td style="width: 50px;">
+                    <a href="{{item.image}}" target="_blank">
+                        <img style="width: 100px;" [src]="item.image">
+                    </a>
+                </td>
+                <td style="width: 150px;">{{item.submittedDate | date: "MM-dd-yyyy HH:mm"}}</td>
+                <td><span [class]="'custom-badge status-' + getKeyStatus(item.status)">{{item.status}}</span></td>
+                <td>{{item.mbxReward}}</td>
+                <td>
+                    <button *ngIf="showCancelButton(item.status)" pButton pRipple icon="pi pi-times" label="Dismiss" class="p-button-secondary p-button-sm p-button-rounded p-mr-2 button-proof" (click)="onClickCancel(item)"></button>
+                    <button *ngIf="showApproveButton(item.status)" pButton pRipple icon="pi pi-check" label="Approve" class="p-button-success p-button-sm p-button-rounded p-mr-2 button-proof button-proof-second" (click)="onClickApprove(item)"></button>
+                    <button *ngIf="showApprovedButton(item.status)" disabled pButton pRipple icon="pi pi-check" label="Approved" class="p-button-secondary p-button-sm p-button-rounded p-mr-2 button-proof"></button>
+                    <button *ngIf="showCancelledButton(item.status)" disabled pButton pRipple icon="pi pi pi-times" label="Dismissed" class="p-button-secondary p-button-sm p-button-rounded p-mr-2 button-proof"></button>
+                    <button *ngIf="showBurntButton(item.status)" disabled pButton pRipple icon="pi pi-exclamation-circle" label="Burnt" class="p-button-secondary p-button-sm p-button-rounded p-mr-2 button-proof"></button>
+                    <button *ngIf="showBurnButton(item.status)" pButton pRipple icon="pi pi-exclamation-circle" label="Burn MBX" class="p-button-secondary p-button-sm p-button-rounded p-mr-2 button-proof" (click)="onClickBurn(item)"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<!-- ACHIEVEMENT PARTICIPATIONS-->
+
+<p-confirmDialog #cd [style]="{width: '450px'}">
+    <ng-template pTemplate="footer">
+        <button type="button" pButton class="p-button-custom-rounded p-dialog-button-no" icon="pi pi-times" label="No" (click)="cd.reject()"></button>
+        <button type="button" pButton class="p-button-custom-rounded" icon="pi pi-check" label="Yes" (click)="cd.accept()"></button>
+    </ng-template>
+</p-confirmDialog>

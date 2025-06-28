@@ -1,0 +1,19 @@
+<section class="create-feature-container" *ngIf="showForm">
+    <div class="icon-container">
+        <i class="pi pi-times icon" (click)="resetForm()"></i>
+    </div>
+
+    <section class="inputs-container">
+        <input  [(ngModel)]="tempFeature.name" type="text" pInputText placeholder="Name">
+        <input *ngIf="!feature" [(ngModel)]="tempFeature.key_feature" type="text" pInputText placeholder="Key">
+        <input *ngIf="feature?.key_feature" [disabled]="true" [value]="tempFeature.key_feature" type="text" pInputText placeholder="Key">
+        <span  [ngClass]="{'animation-error': showError}" class="mb-2 font-semibold label-error-element">Key feature: "{{tempFeature.key_feature}}" already exists</span>
+
+        <button pButton pRipple
+            [label]="!feature ? 'Create': 'Edit'"
+            [disabled]="!tempFeature.name || !tempFeature.key_feature"
+            (click)="!feature ? createFeature() : updateFeature()"
+            >
+        </button>
+    </section>
+</section>

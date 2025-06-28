@@ -1,0 +1,21 @@
+.switch-theme-container {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+
+    .icon {
+        font-size: 16px;
+    }
+
+    .prueba {
+        display: flex;
+    }
+}
+
+.profile-image-button{
+    border-radius: 50%;
+
+    .profile-image-element{
+        border-radius: 50%;
+    }
+}

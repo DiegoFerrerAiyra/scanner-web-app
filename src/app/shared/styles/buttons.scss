@@ -1,0 +1,93 @@
+@import './colors.scss';
+@import './sizes.scss';
+
+button {
+    cursor: pointer !important;
+    position: relative !important;
+    letter-spacing: 0.8px !important;
+}
+
+button:disabled {
+    background-color: $contentC !important;
+    color: $white !important;
+    border: none;
+    cursor: not-allowed !important;
+}
+
+button:hover:not([disabled]) .btn-overlay {
+    display: block !important;
+}
+
+button:hover:not([disabled]) .btn-overlay-default {
+    display: block !important;
+}
+
+.btn-modak {
+    border: none;
+    padding: 10px 0px;
+    line-height: 20px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 100px;
+}
+
+.btn-overlay {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 100px;
+    z-index: 2;
+}
+
+.btn-overlay-default {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 2;
+}
+
+.btn-green-primary {
+    background-color: $accentE;
+    color: $white;
+}
+.btn-green-primary-outline {
+    background: linear-gradient(0deg, hwb(175 0% 58% / 0.05), rgba(0, 106, 97, 0.05)), $onSurfaceLight1;
+    color: $accentE;
+    border: 2px solid $accentE;
+}
+.btn-green-primary-nonline {
+    background: transparent;
+    color: $onSurface1;
+    border: 2px solid transparent;
+}
+
+.btn-green-secondary {
+    background-color: $green1;
+    color: $accentE;
+}
+
+.btn-gray-primary{
+    background-color: $darkGray3;
+    color: $white;
+}
+
+
+@media only screen and (min-width: $desktop) {
+    .btn-modak {
+        font-size: 16px;
+    }
+}

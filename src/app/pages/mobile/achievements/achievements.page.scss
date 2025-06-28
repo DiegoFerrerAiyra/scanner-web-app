@@ -1,0 +1,86 @@
+@import 'variables';
+
+.p-invalid {
+  color: $lightInvalid;
+}
+
+.image-dialog-container {
+  width: 100%;
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+.section-label {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.switch-container {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  margin: 1em 0;
+  .switch-label {
+    height: 28px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+.proof-container {
+  margin-top: 1em;
+  .radio-container {
+    margin-top: 0.5em;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    margin-left: 0.5em;
+    .radio-element {
+      width: 20px;
+      height: 20px;
+    }
+    .radio-label {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+}
+
+.dates-container {
+  display: flex;
+  column-gap: 10px;
+}
+
+.annoucement-container {
+  margin: 1em 0;
+  p {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+.finished-container {
+  margin: 1em 0;
+  p {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+.button-actions {
+    width: 110px; 
+    font-size: 10px;
+    border-radius: 15px;
+}
+
+.button-second {
+    margin-top: 2px;
+}
+
