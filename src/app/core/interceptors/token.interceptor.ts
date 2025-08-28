@@ -10,14 +10,13 @@ import {
 import { catchError, from, lastValueFrom, Observable, throwError } from 'rxjs';
 import { NO_INSERT_TOKEN, NO_INTERCEPTORS, NO_VERIFY_UNAUTHORIZE } from './constants/interceptors.constants';
 import { AuthService } from '@modules/auth/auth.service';
-import { WafProtectionService } from '@core/services/waf-protection/waf-protection.service';
+
 
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
   private readonly authService:AuthService = inject(AuthService)
-  private readonly wafProtectionService: WafProtectionService = inject(WafProtectionService)
 
   intercept(request: HttpRequest<any>, next: HttpHandler) : Observable<HttpEvent<any>>{
 
@@ -44,13 +43,6 @@ export class TokenInterceptor implements HttpInterceptor {
     if(!token) return lastValueFrom(next.handle(request));
 
     request = this.createRequestWithJWT(request, token);
-
-    if (this.wafProtectionService.allowWafTokenModakUrl(request)) {
-      const awsToken = await this.wafProtectionService.getToken();
-      if (awsToken) {
-        request = this.wafProtectionService.createRequestWithAwsToken(request,awsToken);
-      }
-    }
 
     return lastValueFrom(next.handle(request))
   }

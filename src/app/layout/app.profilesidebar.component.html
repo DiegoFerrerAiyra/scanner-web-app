@@ -4,7 +4,7 @@
         <span class="text-color-secondary font-medium mb-5">{{user.name}}</span>
 
         <ul class="list-none m-0 p-0">
-            <li>
+            <li *ngif="user.email">
                 <a class=" flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150">
                     <span>
                         <i class="pi pi-user text-xl text-primary"></i>
@@ -19,7 +19,7 @@
                 </a>
             </li>
 
-            <li>
+            <li *ngif="rol">
                 <a class=" flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150">
                     <span>
                         <i class="pi pi-user text-xl text-primary"></i>

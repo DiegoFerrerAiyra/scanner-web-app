@@ -1,7 +1,4 @@
 export const environmentCommon = {
-    SOLID:{
-        URL_DASHBOARD:'https://dashboard.solidfi.com',
-    },
     firebase: {
         enabled:false,
         projectId: 'modak-web-features-flags',
@@ -12,13 +9,13 @@ export const environmentCommon = {
         messagingSenderId: '749226775895',
         usersAllowed:[
             'ferrer.diego@modak.live',
-            'henry@modak.live',
-            'montero.alvaro@modak.live',
-            'jp.castro@modak.live',
-            'lucas.vargas@modak.live'
         ],
         userApp:"tech.web+admin@modak.live",
         token:"*bHGrK*$*ZT1JlxtU1EFRQ6^1Glw25"
     },
-    LOCAL_URL: "http://localhost:4500"
+    google:{
+        clientId: "245409623869-95u22enr79qgerasdh4i96c6tes72j4f.apps.googleusercontent.com",
+    },
+    LOCAL_URL: "http://localhost:4500",
+    WS_URL: 'ws://localhost:8000/ws' 
 }

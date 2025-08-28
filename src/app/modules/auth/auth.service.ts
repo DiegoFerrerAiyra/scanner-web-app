@@ -32,7 +32,7 @@ export class AuthService {
     if(!isExpired) return tokensStore.accessToken
 
 
-    const newAccessToken = await this.getNewAccessToken(tokensStore.refreshToken)
+    const newAccessToken = ""// await this.getNewAccessToken(tokensStore.refreshToken)
     return newAccessToken
   }
 
@@ -51,15 +51,6 @@ export class AuthService {
 
   }
 
-  private async getNewAccessToken(refreshToken:string):Promise<string | void>{
-    try {
-      const newAccessToken:string = await firstValueFrom(this.authApi.refreshToken(refreshToken))
-      this.store.dispatch(authActions.refreshAccessToken({newToken:newAccessToken}))
-      return newAccessToken
-    } catch (error) {
-        this.logout()
-    }
-  }
 
   getUserFromStore():Observable<IUser>{
     return this.store.select(selectUser).pipe(

@@ -1,0 +1,137 @@
+@import "variables";
+
+.card-table{
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top: 5em;
+}
+
+.button-verify{
+    width: 68.34px;
+    width: auto;
+    height: 23px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.expansion-container {
+    display:flex; 
+    justify-content:center;
+
+    .internal-separator{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        .first-separator{
+            h3{
+                margin: 0 !important;
+            }
+            padding: 0 2em;
+
+            .modak-section{
+                display: flex;
+                column-gap: 8px;
+                align-items: center;
+
+                .value-container{
+                    display: flex; 
+                    justify-content:center; 
+                    align-items:center;
+                }
+            }
+        }
+
+        .second-separator {
+            padding: 0 2em; 
+            display: flex; 
+            justify-content: space-between;
+
+            .discord-container{
+                min-height: 120px; 
+                width: 50%;
+
+                .value-container{
+                    display: flex; 
+                    align-items: center;
+
+                    .title{
+                        font-weight: bold; 
+                        font-size: 15px; 
+                        margin-left: 1em; 
+                        color: lightblue;
+                    }
+
+                    .value-element{
+                        margin-left: 0.5em;
+                    }
+                }
+            }
+
+            .identity-container{
+                width: 50%;
+
+                .value-container{
+                    display: flex; 
+                    align-items: center;
+                    margin-top: 1em;
+
+                    h4{
+                        margin: 0 !important;
+                    }
+
+                    .title{
+                        font-weight: bold; 
+                        font-size: 15px; 
+                        margin-left: 1em; 
+                        color: lightblue;
+                    }
+
+                    .value-element{
+                        margin-left: 0.5em;
+                    }
+
+                    .list-container{
+                        margin-left: 1.5em; 
+                        margin-bottom: 1em;
+                        list-style: none; 
+
+                        .agroup-container{
+                            display: flex;
+                            .value-bold{
+                                font-weight: 500; 
+                                color: lightsalmon;
+                                min-width: 65px;
+                            }
+                            .value-element{
+                                margin-left: 0.5em; 
+                                font-weight: 400; 
+                                color:#000;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Row flash animation for updated rows */
+@keyframes rowFlash {
+  0%   { background-color: rgba(255, 235, 59, 0.5); }  /* soft yellow */
+  100% { background-color: transparent; }
+}
+
+.row-flash {
+  animation: rowFlash 0.8s ease-in-out;
+}
+
+
+
+@media only screen and (min-width: $desktop){
+
+}

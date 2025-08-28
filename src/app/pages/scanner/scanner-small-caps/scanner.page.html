@@ -1,0 +1,50 @@
+<div class="card card-table">
+  <p-table
+    [value]="microCapsView$ | async"
+    dataKey="symbol"
+    [expandedRowKeys]="expandedRows"
+    responsiveLayout="scroll"
+    [sortMode]="'single'"
+    [sortField]="'gap'"
+    [sortOrder]="-1"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="symbol">Simbolo <p-sortIcon field="symbol"></p-sortIcon></th>
+        <th pSortableColumn="price">Precio <p-sortIcon field="price"></p-sortIcon></th>
+        <th pSortableColumn="gap">Gap % <p-sortIcon field="gap"></p-sortIcon></th>
+        <th pSortableColumn="volume">Volumen hoy <p-sortIcon field="volume"></p-sortIcon></th>
+        <th pSortableColumn="marketCap">Market Cap <p-sortIcon field="marketCap"></p-sortIcon></th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-microCap let-expanded="expanded" let-i="rowIndex">
+      <tr [ngClass]="{'row-flash': isFlashing(microCap.symbol)}">
+        <td style="min-width: 12rem">{{ microCap.symbol }}</td>
+        <td style="min-width: 8rem">${{ microCap.price | number:'1.0-2' | dotToComma }}</td>
+        <td [colorBySign]="microCap.gap" style="min-width: 10rem">{{ microCap.gap }}%</td>
+        <td style="min-width: 10rem">{{ microCap.volume | numberSuffix }}</td>
+        <td style="min-width: 10rem">{{ microCap.marketCap | numberSuffix }}</td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="rowexpansion" let-microCap>
+      <tr>
+        <td colspan="8">
+          <div class="expansion-container">
+            <div class="p-p-3 internal-separator">
+              <div class="first-separator">
+                <section class="modak-section">
+                  <h3>Description</h3>
+                  <div class="value-container">
+                    <p class="value-element">{{ microCap.accountCreated }}</p>
+                  </div>
+                </section>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

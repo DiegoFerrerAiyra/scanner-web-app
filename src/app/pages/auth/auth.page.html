@@ -1,9 +1,10 @@
 <section class="container">
   <picture class="logo-container">
-    <img class="logo-element" src="./assets/images/logo-modak-light.svg" alt="">
+    <img class="logo-element" src="./assets/images/background-auth.png" alt="">
   </picture>
 
-  <button class="button-container" (click)="getAwsSignInCode()" *ngIf="!loginTempCode">
-    <i class="pi pi-google icon"></i>
-    Sign in with Google</button>
+    <button class="button-container" (click)="onGoogleClick()">
+      <i class="pi pi-google icon"></i>
+      Sign in with Google
+    </button>
 </section>

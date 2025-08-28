@@ -16,10 +16,10 @@ export class AuthApi {
 
   getTokens(loginCode:string):Observable<IAwsSignInResponse>{
 
-    const DOMAIN= environment.AUTH_VARS.DOMAIN
+    const DOMAIN= ""
     const TOKEN_PATH="oauth2/token"
-    const CLIENT_ID = environment.AUTH_VARS.CLIENT_ID
-    const REDIRECT_URI = this.globalService.isLocalhost() ? `${environment.LOCAL_URL}/auth` : environment.AUTH_VARS.REDIRECT_URI
+    const CLIENT_ID = ""
+    const REDIRECT_URI = this.globalService.isLocalhost() ? `${environment.LOCAL_URL}/auth` :" environment.AUTH_VARS.REDIRECT_URI"
 
     const headers = new HttpHeaders({
       'Content-type': 'application/x-www-form-urlencoded'
@@ -35,30 +35,6 @@ export class AuthApi {
     return this.http.post<IAwsSignInResponse>(url,body,{headers})
   }
 
-  refreshToken(refreshToken:string):Observable<string>{
-
-    const DOMAIN = environment.AUTH_VARS.DOMAIN
-    const REFRESH_PATH="oauth2/token"
-    const CLIENT_ID = environment.AUTH_VARS.CLIENT_ID
-
-    const options = {
-      context: new HttpContext().set(NO_INSERT_TOKEN, true),
-      headers:{
-        'Content-type': 'application/x-www-form-urlencoded'
-      }
-    }
-
-    const body = new HttpParams()
-    .set('grant_type','refresh_token')
-    .set('client_id',CLIENT_ID)
-    .set('refresh_token',refreshToken)
-
-    const url = `${DOMAIN}/${REFRESH_PATH}`
-
-    return this.http.post<IAwsSignInResponse>(url,body.toString(),options).pipe(
-      map(response => response.access_token),
-    )
-  }
 
 
 }

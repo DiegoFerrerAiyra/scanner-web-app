@@ -46,7 +46,7 @@
     "luxon": "^3.3.0",
     "ngrx-store-localstorage": "^15.0.0",
     "ngx-clipboard": "^16.0.0",
-    "ngx-cookie-service": "^18.0.0",
+    "ngx-cookie-service": "^15.0.0",
     "ngx-papaparse": "^8.0.0",
     "open-cli": "^7.2.0",
     "papaparse": "^5.4.1",
