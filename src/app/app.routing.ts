@@ -4,6 +4,7 @@ import { HasRoleGuard } from '@core/roles/has-roles.guard';
 import { ROLES_AVAILABLE } from '@core/roles/models/constants/roles.constants';
 import { PublicGuard } from 'src/app/core/guards/public.guard';
 import { AppLayoutComponent } from './layout/app.layout.component';
+import { AuthenticatedGuard } from '@core/guards/authenticated.guard';
 
 const routerOptions: ExtraOptions = {
     anchorScrolling: 'enabled'
@@ -13,7 +14,7 @@ const routes: Routes = [
     {
         path: '',
         component: AppLayoutComponent,
-        // canActivate: [AuthenticatedGuard],
+        canActivate: [AuthenticatedGuard],
         children: [
             {
                 path: "",

@@ -1,6 +1,6 @@
 import { inject } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivateFn, Router } from "@angular/router";
-import { UserState } from "@modules/auth/state/authentication.reducer";
+import { AuthState } from "@modules/auth/state/auth.state";
 import { selectRoles } from "@modules/auth/state/authentication.selectors";
 import { Store } from "@ngrx/store";
 import { map, Observable, Subject, takeUntil } from "rxjs";
@@ -10,7 +10,7 @@ export const HasRoleGuard: CanActivateFn = (_routeActive: ActivatedRouteSnapshot
 
     //#region [---- DEPENDENCIES ----]
     const router: Router = inject(Router);
-    const store:Store<UserState> = inject(Store<UserState>)
+    const store:Store<AuthState> = inject(Store<AuthState>)
     //#endregion
 
     const expectedRoles = _routeActive.data["allowedRoles"];

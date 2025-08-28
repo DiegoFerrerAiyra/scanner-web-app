@@ -4,11 +4,12 @@ import * as authenticationReducer from '../../modules/auth/state/authentication.
 // Global App Reducers
 import * as loaderReducer from './reducers/loader/loader.reducer';
 import * as responsiveReducer from './reducers/responsive/responsive.reducer';
+import { AuthState } from '@modules/auth/state/auth.state';
 
 export interface GlobalState {
     loader: loaderReducer.LoaderState
     responsive: responsiveReducer.ResponsiveState
-    authentication: authenticationReducer.UserState
+    authentication: AuthState
 }
 
 export const appReducers: ActionReducerMap<GlobalState> = {

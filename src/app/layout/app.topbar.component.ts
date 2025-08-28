@@ -1,5 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { GlobalState } from '@core/global-state/app.state';
+import { selectUser } from '@modules/auth/state/authentication.selectors';
+import { Store } from '@ngrx/store';
 import { InputSwitchOnChangeEvent } from 'primeng/inputswitch';
+import { Subscription } from 'rxjs';
 import { LayoutService,ColorScheme } from 'src/app/layout/service/app.layout.service';
 
 
@@ -9,9 +13,14 @@ import { LayoutService,ColorScheme } from 'src/app/layout/service/app.layout.ser
     templateUrl: './app.topbar.component.html',
     styleUrls:  ['./app.topbar.component.scss'],
 })
-export class AppTopbarComponent implements OnInit {
+export class AppTopbarComponent implements OnInit,OnDestroy {
+
+    private readonly store:Store<GlobalState> = inject(Store<GlobalState>)
+    
 
     darkMode:boolean = false
+    profileSubscription!:Subscription
+    pictureProfileUrl:string = ""
 
     @ViewChild('menubutton') menuButton!: ElementRef;
 
@@ -26,11 +35,20 @@ export class AppTopbarComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.profile()
         const savedTheme = localStorage.getItem('saveTheme') as ColorScheme;
         if(savedTheme) {
             this.colorScheme = savedTheme
             this.darkMode = savedTheme === 'dark'
         }
+    }
+
+    ngOnDestroy(): void {
+        if(this.profileSubscription) this.profileSubscription?.unsubscribe()
+    }
+
+    profile():void{
+        this.profileSubscription = this.store.select(selectUser).subscribe(profile => this.pictureProfileUrl = profile.picture);
     }
 
     changeTheme(event:InputSwitchOnChangeEvent):void{

@@ -22,16 +22,6 @@ button:hover:not([disabled]) .btn-overlay-default {
     display: block !important;
 }
 
-.btn-modak {
-    border: none;
-    padding: 10px 0px;
-    line-height: 20px;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    border-radius: 100px;
-}
-
 .btn-overlay {
     display: none;
     position: absolute;
@@ -87,7 +77,5 @@ button:hover:not([disabled]) .btn-overlay-default {
 
 
 @media only screen and (min-width: $desktop) {
-    .btn-modak {
-        font-size: 16px;
-    }
+
 }

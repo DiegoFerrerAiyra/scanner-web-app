@@ -1,15 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { GlobalState } from '@core/global-state/app.state';
 import { IUser } from '@modules/auth/models/interfaces/auth.interfaces';
 import { selectUser } from '@modules/auth/state/authentication.selectors';
 import { Store } from '@ngrx/store';
-import { first, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/modules/auth/auth.service';
 import { LayoutService } from './service/app.layout.service';
 import { ClipboardService } from 'ngx-clipboard';
 import { MessageService } from 'primeng/api';
 import { TOAST_SEVERITY_TYPES } from '@shared/primeng/constants/toast.constants';
 import { FIVE_SECONDS } from '@shared/models/constants/time.constant';
+import { AuthState } from '@modules/auth/state/auth.state';
 
 @Component({
     selector: 'mdk-profilemenu',
@@ -66,7 +66,7 @@ export class AppProfileSidebarComponent implements OnInit {
     private readonly layoutService:LayoutService = inject(LayoutService)
     private readonly authService:AuthService = inject(AuthService)
     private readonly clipboardService:ClipboardService = inject(ClipboardService)
-    private readonly store:Store<GlobalState> = inject(Store<GlobalState>)
+    private readonly store:Store<AuthState> = inject(Store<AuthState>)
     private messageService: MessageService = inject(MessageService)
 
     user$!: Observable<IUser>;
@@ -93,8 +93,6 @@ export class AppProfileSidebarComponent implements OnInit {
             detail: value
         });
     }
-
-
 
     logout():void{
         this.authService.logout()

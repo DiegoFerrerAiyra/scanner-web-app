@@ -10,7 +10,6 @@ import jwt_decode from "jwt-decode";
 
 // actions
 import { logoutAction } from '../../core/global-state/reducers/clear/clearState.actions'
-import { authActions } from '@modules/auth/state/authentication.actions';
 import { AuthApi } from '@modules/auth/auth.api';
 
 @Injectable({

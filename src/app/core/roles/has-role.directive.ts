@@ -1,6 +1,7 @@
 import { Directive, inject, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Roles } from '@core/roles/models/types/roles.types';
-import { UserState } from '@modules/auth/state/authentication.reducer';
+import { AuthState } from '@modules/auth/state/auth.state';
+
 import { selectRoles } from '@modules/auth/state/authentication.selectors';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
@@ -14,7 +15,7 @@ export class HasRoleDirective implements OnDestroy {
 
   private templateRef:TemplateRef<any> = inject(TemplateRef<any>)
   private viewContainer:ViewContainerRef = inject(ViewContainerRef)
-  private store:Store<UserState> = inject(Store<UserState>)
+  private store:Store<AuthState> = inject(Store<AuthState>)
 
   //#endregion
 

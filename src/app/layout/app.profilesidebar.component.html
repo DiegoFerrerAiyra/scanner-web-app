@@ -1,25 +1,21 @@
 <p-sidebar [(visible)]="visible" position="right" [transitionOptions]="'.3s cubic-bezier(0, 0, 0.2, 1)'" styleClass="layout-profile-sidebar w-full sm:w-25rem">
     <div class="flex flex-column mx-auto md:mx-0" *ngIf="user$ | async as user">
         <span class="mb-2 font-semibold">Welcome</span>
-        <span class="text-color-secondary font-medium mb-5">{{user.name}}</span>
+        <span class="text-color-secondary font-medium mb-5">{{user.email}}</span>
 
         <ul class="list-none m-0 p-0">
-            <li *ngif="user.email">
+            <li *ngIf="user.email">
                 <a class=" flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150">
                     <span>
                         <i class="pi pi-user text-xl text-primary"></i>
                     </span>
                     <div class="ml-3 elements-container">
-                        <!-- <div class="info-element">
-                            <p class="text-color-secondary m-0 id-element">● {{user.id}} </p>
-                            <i class="pi pi-copy text-xl text-primary copy-icon" (click)="copyToClipboard(user.id)"></i>
-                        </div> -->
-                        <p class="text-color-secondary m-0">● {{user.email}}</p>
+                        <p class="text-color-secondary m-0">{{user.name}}</p>
                     </div>
                 </a>
             </li>
 
-            <li *ngif="rol">
+<!--             <li *ngIf="rol">
                 <a class=" flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150">
                     <span>
                         <i class="pi pi-user text-xl text-primary"></i>
@@ -31,7 +27,7 @@
                     </div>
                 </a>
             </li>
-
+ -->
             <li (click)="logout()">
                 <a class="cursor-pointer flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150">
                     <span>
