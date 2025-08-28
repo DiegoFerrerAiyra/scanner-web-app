@@ -28,8 +28,7 @@ export class MicrocapsService implements OnDestroy {
 
   private connect(): void {
     this.socket$ = webSocket<WsEvent>({
-      //url: environment.WS_URL,
-      url: "wss://nikola.fly.dev/ws",
+      url: environment.WS_URL,
       deserializer: (e: MessageEvent<string>): WsEvent => {
         try {
           return JSON.parse(e.data) as unknown as WsEvent;

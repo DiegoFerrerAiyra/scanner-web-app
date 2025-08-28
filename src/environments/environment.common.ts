@@ -17,5 +17,5 @@ export const environmentCommon = {
         clientId: "245409623869-95u22enr79qgerasdh4i96c6tes72j4f.apps.googleusercontent.com",
     },
     LOCAL_URL: "http://localhost:4500",
-    WS_URL: 'ws://localhost:8000/ws' 
+ 
 }

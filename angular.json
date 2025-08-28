@@ -12,12 +12,12 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "mdk",
+      "prefix": "nik",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/modak-live",
+            "outputPath": "dist/nikola-scanner",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -72,6 +72,20 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "testing": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -84,6 +98,9 @@
             },
             "development": {
               "browserTarget": "backoffice:build:development"
+            },
+            "testing": {
+              "browserTarget": "backoffice:build:testing"
             }
           },
           "defaultConfiguration": "development"
