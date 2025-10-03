@@ -2,6 +2,7 @@
   <p-table
     [value]="microCapsView$ | async"
     dataKey="symbol"
+    [rowTrackBy]="trackBySymbol" 
     [expandedRowKeys]="expandedRows"
     responsiveLayout="scroll"
     [sortMode]="'single'"

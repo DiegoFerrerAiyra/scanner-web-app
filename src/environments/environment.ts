@@ -9,5 +9,6 @@ export const environment = {
     APIS:{
       MONOLITH_URL: 'https://api.dev.modak.live/v1'
     },
-    WS_URL: 'ws://localhost:8000/ws' 
+    //WS_URL: 'ws://localhost:8000/ws' 
+    WS_URL: 'wss://nikola.fly.dev/ws' 
 }
